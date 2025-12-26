@@ -48,6 +48,8 @@ npm run dev
 ## Assumptions or Notes
 
 - Names are stored in memory using a JavaScript array.
+- Allows to clear all names.
+- Restarting server make array empty.
 - No database or file storage is used.
 - This project is intended for learning and practice purposes.
 
