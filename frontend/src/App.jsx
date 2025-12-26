@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API_URL = "http://localhost:5000/api/names";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function App() {
   const [name, setName] = useState("");
@@ -15,12 +15,12 @@ export default function App() {
       setNames(data.names);
     } catch (err) {
       console.log(err);
+      setError("Failed to fetch names");
     }
   };
 
   useEffect(() => {
     fetchNames();
-    
   }, []);
 
   const handleSubmit = async () => {
@@ -52,8 +52,22 @@ export default function App() {
 
     setLoading(false);
   };
-  
 
+  const handleClearAll = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(API_URL, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        setNames([]);
+      } else {
+        setError("Failed to clear names");
+      }
+    } catch (err) {
+      setError("Failed to clear names");
+    }
+    setLoading(false);
+  };
 
   return (
     <div className="max-w-md mx-auto mt-20 p-6 border rounded shadow text-center">
@@ -74,12 +88,24 @@ export default function App() {
       >
         {loading ? "Adding..." : "Submit"}
       </button>
-         {error && <p className="text-red-500 mb-2">{error}</p>}
+
+      <button
+        onClick={handleClearAll}
+        disabled={loading || names.length === 0}
+        className="bg-red-500 text-white px-4 py-2 rounded w-full mb-2"
+      >
+        {loading ? "Processing..." : "Clear All"}
+      </button>
+
+      {error && <p className="text-red-500 mb-2">{error}</p>}
 
       <ul className="text-left mt-4">
         {names.map((n, i) => (
-          <li key={i} className="border-b py-1">
-            {n} 
+          <li key={i} className="border-b py-1 flex justify-between">
+            <span>{n.name}</span>
+            <span className="text-gray-500 text-sm">
+              {new Date(n.createdAt).toLocaleString()}
+            </span>
           </li>
         ))}
       </ul>
