@@ -12,6 +12,12 @@ A simple full-stack application that allows users to submit names from a React f
 
 ---
 
+
+Open a terminal and run:
+
+```bash
+git clone https://github.com/Rishi766-creator/hello_names.git
+
 ## How to Run the Backend
 
   cd backend
@@ -36,22 +42,6 @@ npm run dev
 
 ---
 
-## Project Structure
-
-hello-names/
-│
-├── backend/
-│   ├── index.js
-│   ├── package.json
-│   └── .gitignore
-│
-├── frontend/
-│   ├── src/
-│   │   └── App.jsx
-│   ├── package.json
-│   └── .gitignore
-│
-└── README.md
 
 
 
